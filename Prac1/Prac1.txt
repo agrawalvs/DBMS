@@ -1,0 +1,243 @@
+SQL> CREATE TABLE HOTEL(
+  2   Hotel_No VARCHAR2(20) NOT NULL,
+  3   Name VARCHAR2(20) NOT NULL,
+  4   City VARCHAR2(15) NOT NULL,
+  5   CONSTRAINT pk_hotel_no PRIMARY KEY(Hotel_No)
+  6   );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE ROOM(
+  2  Room_No NUMERIC(4),
+  3  Hotel_No VARCHAR2(4),
+  4  Type VARCHAR2(1),
+  5  Price NUMERIC(7,2) NOT NULL,
+  6  CONSTRAINT ROOM_CPK_HOTEL_ROOM PRIMARY KEY (Hotel_No, Room_No),
+  7  CONSTRAINT ROOM_FK_HOTEL_NO FOREIGN KEY (Hotel_No) REFERENCES HOTEL(Hotel_No),
+  8  CONSTRAINT ROOM_CHECK_TYPE CHECK (Type IN ('A', 'N'))
+  9  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE GUEST(
+  2   Guest_No VARCHAR2(5),
+  3   Name VARCHAR2(30) NOT NULL,
+  4   DOB DATE,
+  5   Gender VARCHAR2(1) NOT NULL,
+  6   Phone_No NUMERIC(10) UNIQUE ,
+  7   Adhar_No NUMERIC(12) UNIQUE,
+  8   CONSTRAINT GUEST_PK_GUESTNO PRIMARY KEY(Guest_No),
+  9   CONSTRAINT GUEST_CHK_PHONENO CHECK (Phone_No >= 5999999999 AND  Phone_No <= 9999999999),
+ 10   CONSTRAINT GUEST_CHK_GENDER CHECK (Gender IN ('M', 'F'))
+ 11   );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE BOOKING(
+  2   Hotel_No VARCHAR2(4),
+  3   Guest_No VARCHAR2(5),
+  4   Room_No NUMERIC(4),
+  5   Date_From DATE NOT NULL,
+  6   Date_To DATE NOT NULL,
+  7   CONSTRAINT BOOKING_CHK_DATE CHECK (Date_To>Date_From),
+  8   CONSTRAINT BOOKING_CPK_HOTEL_ROOM PRIMARY KEY (Hotel_No, Room_No, Guest_No)
+  9   );
+
+Table created.
+
+SQL> 
+SQL> 
+SQL> INSERT INTO HOTEL VALUES('H111', 'Empire Hotel','Delhi');
+
+1 row created.
+
+SQL> INSERT INTO HOTEL VALUES('H235', 'Park Place','Delhi');
+
+1 row created.
+
+SQL> INSERT INTO HOTEL VALUES('H432', 'Brawnstone Hotel','Mumbai');
+
+1 row created.
+
+SQL> INSERT INTO HOTEL VALUES('H498', 'James Plaza','Mumbai');
+
+1 row created.
+
+SQL> INSERT INTO HOTEL VALUES('H193', 'Devon Hotel','Pune');
+
+1 row created.
+
+SQL> INSERT INTO HOTEL VALUES('H437', 'Clarimont Hotel','Pune');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO ROOM VALUES (313, 'H111', 'A',1450.55);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (412, 'H111', 'N',1450.55);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (1267, 'H235', 'N',1750.55);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (1289, 'H235', 'N',1950.55);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (876, 'H432', 'A',1240.55);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (898, 'H432', 'A',1240.55);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (345, 'H498', 'N',1600.00);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (467, 'H498', 'N',1800.00);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (1001, 'H193', 'A',1500.00);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (1201, 'H193', 'N',1750.00);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (257, 'H437', 'N',1400.00);
+
+1 row created.
+
+SQL> INSERT INTO ROOM VALUES (223, 'H437', 'N',1550.00);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO GUEST VALUES('G256', 'Siddhi Sandip Gupta',TO_DATE('2003/05/03','yyyy/mm/dd'),'F',9875456884,681521547896);
+
+1 row created.
+
+SQL> INSERT INTO GUEST VALUES('G367', 'Smruti Ajay Agrawal',TO_DATE('2003/05/03','yyyy/mm/dd'),'F',8875456884,681521547897);
+
+1 row created.
+
+SQL> INSERT INTO GUEST VALUES('G879', 'Sham Sunder',TO_DATE('2003/05/04','yyyy/mm/dd'),'F',8875456885,681521547898);
+
+1 row created.
+
+SQL> INSERT INTO GUEST VALUES('G230', 'Sunishka Varunesh Malviya',TO_DATE('2003/05/04','yyyy/mm/dd'),'F',8875456886,681521547899);
+
+1 row created.
+
+SQL> INSERT INTO GUEST VALUES('G476', 'Vanshita Jayesh Chandarana',TO_DATE('2003/05/04','yyyy/mm/dd'),'F',8875456887,681521549900);
+
+1 row created.
+
+SQL> INSERT INTO GUEST VALUES('G190', 'Ram Kumar',TO_DATE('2003/05/04', 'yyyy/mm/dd'),'M',8875456888,681521549901);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO BOOKING VALUES('H111','G256',69,TO_DATE('2022/09/08', 'yyyy/mm/dd'), TO_DATE('2022/09/10','yyyy/mm/dd'));
+
+1 row created.
+
+SQL> INSERT INTO BOOKING VALUES('H111','G367',412,TO_DATE('2022/09/08', 'yyyy/mm/dd'), TO_DATE('2022/09/10','yyyy/mm/dd'));
+
+1 row created.
+
+SQL> INSERT INTO BOOKING VALUES('H235','G879',1267,TO_DATE('2022/09/08', 'yyyy/mm/dd'), TO_DATE('2022/09/10','yyyy/mm/dd'));
+
+1 row created.
+
+SQL> INSERT INTO BOOKING VALUES('H235','G230',1289,TO_DATE('2022/09/08', 'yyyy/mm/dd'), TO_DATE('2022/09/10','yyyy/mm/dd'));
+
+1 row created.
+
+SQL> INSERT INTO BOOKING VALUES('H432','G476',876,TO_DATE('2022/09/08', 'yyyy/mm/dd'), TO_DATE('2022/09/10','yyyy/mm/dd'));
+
+1 row created.
+
+SQL> INSERT INTO BOOKING VALUES('H498','G190',345,TO_DATE('2022/09/08', 'yyyy/mm/dd'), TO_DATE('2022/09/10','yyyy/mm/dd'));
+
+1 row created.
+
+SQL> 
+SQL> SELECT * FROM HOTEL;
+
+HOTEL_NO             NAME                 CITY                                  
+-------------------- -------------------- ---------------                       
+H111                 Empire Hotel         Delhi                                 
+H235                 Park Place           Delhi                                 
+H432                 Brawnstone Hotel     Mumbai                                
+H498                 James Plaza          Mumbai                                
+H193                 Devon Hotel          Pune                                  
+H437                 Clarimont Hotel      Pune                                  
+
+6 rows selected.
+
+SQL> SELECT * FROM ROOM;
+
+   ROOM_NO HOTE T      PRICE                                                    
+---------- ---- - ----------                                                    
+       313 H111 A    1450.55                                                    
+       412 H111 N    1450.55                                                    
+      1267 H235 N    1750.55                                                    
+      1289 H235 N    1950.55                                                    
+       876 H432 A    1240.55                                                    
+       898 H432 A    1240.55                                                    
+       345 H498 N       1600                                                    
+       467 H498 N       1800                                                    
+      1001 H193 A       1500                                                    
+      1201 H193 N       1750                                                    
+       257 H437 N       1400                                                    
+
+   ROOM_NO HOTE T      PRICE                                                    
+---------- ---- - ----------                                                    
+       223 H437 N       1550                                                    
+
+12 rows selected.
+
+SQL> SELECT * FROM GUEST;
+
+GUEST NAME                           DOB       G   PHONE_NO   ADHAR_NO          
+----- ------------------------------ --------- - ---------- ----------          
+G256  Siddhi Sandip Gupta            03-MAY-03 F 9875456884 6.8152E+11          
+G367  Smruti Ajay Agrawal            03-MAY-03 F 8875456884 6.8152E+11          
+G879  Sham Sunder                    04-MAY-03 F 8875456885 6.8152E+11          
+G230  Sunishka Varunesh Malviya      04-MAY-03 F 8875456886 6.8152E+11          
+G476  Vanshita Jayesh Chandarana     04-MAY-03 F 8875456887 6.8152E+11          
+G190  Ram Kumar                      04-MAY-03 M 8875456888 6.8152E+11          
+
+6 rows selected.
+
+SQL> SELECT * FROM BOOKING;
+
+HOTE GUEST    ROOM_NO DATE_FROM DATE_TO                                         
+---- ----- ---------- --------- ---------                                       
+H111 G256          69 08-SEP-22 10-SEP-22                                       
+H111 G367         412 08-SEP-22 10-SEP-22                                       
+H235 G879        1267 08-SEP-22 10-SEP-22                                       
+H235 G230        1289 08-SEP-22 10-SEP-22                                       
+H432 G476         876 08-SEP-22 10-SEP-22                                       
+H498 G190         345 08-SEP-22 10-SEP-22                                       
+
+6 rows selected.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> Spool off
