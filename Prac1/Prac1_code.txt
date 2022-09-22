@@ -76,6 +76,14 @@ SELECT * FROM HOTEL;
 SELECT * FROM ROOM;
 SELECT * FROM GUEST;
 SELECT * FROM BOOKING;
+select constraint_name, constraint_type, table_name, status from user_constraints
+where table_name='HOTEL';
+select constraint_name, constraint_type, table_name, status from user_constraints
+where table_name='ROOM';
+select constraint_name, constraint_type, table_name, status from user_constraints
+where table_name='GUEST';
+select constraint_name, constraint_type, table_name, status from user_constraints
+where table_name='BOOKING';
 
 DROP TABLE BOOKING;
 DROP TABLE GUEST;
