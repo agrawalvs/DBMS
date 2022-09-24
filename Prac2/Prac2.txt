@@ -1,0 +1,400 @@
+SQL> CREATE TABLE HOTEL1 AS SELECT * FROM HOTEL;
+
+Table created.
+
+SQL> CREATE TABLE ROOM1 AS SELECT * FROM ROOM;
+
+Table created.
+
+SQL> CREATE TABLE GUEST1 AS SELECT * FROM GUEST;
+
+Table created.
+
+SQL> CREATE TABLE BOOKING1 AS SELECT * FROM BOOKING;
+
+Table created.
+
+SQL> 
+SQL> 
+SQL> SELECT * FROM HOTEL1;
+
+HOTEL_NO             NAME                 CITY                                  
+-------------------- -------------------- ---------------                       
+H111                 Empire Hotel         Delhi                                 
+H235                 Park Place           Delhi                                 
+H432                 Brawnstone Hotel     Mumbai                                
+H498                 James Plaza          Mumbai                                
+H193                 Devon Hotel          Pune                                  
+H437                 Clarimont Hotel      Pune                                  
+
+6 rows selected.
+
+SQL> SELECT * FROM ROOM1;
+
+   ROOM_NO HOTE T      PRICE                                                    
+---------- ---- - ----------                                                    
+       313 H111 A    1450.55                                                    
+       412 H111 N    1450.55                                                    
+      1267 H235 N    1750.55                                                    
+      1289 H235 N    1950.55                                                    
+       876 H432 A    1240.55                                                    
+       898 H432 A    1240.55                                                    
+       345 H498 N       1600                                                    
+       467 H498 N       1800                                                    
+      1001 H193 A       1500                                                    
+      1201 H193 N       1750                                                    
+       257 H437 N       1400                                                    
+
+   ROOM_NO HOTE T      PRICE                                                    
+---------- ---- - ----------                                                    
+       223 H437 N       1550                                                    
+
+12 rows selected.
+
+SQL> SELECT * FROM GUEST1;
+
+GUEST NAME                           DOB       G   PHONE_NO   ADHAR_NO          
+----- ------------------------------ --------- - ---------- ----------          
+G256  Siddhi Sandip Gupta            03-MAY-03 F 9875456884                     
+G367  Smruti Ajay Agrawal            03-MAY-03 F 8875456884 6.8152E+11          
+G879  Sham Sunder                    04-MAY-03 F 8875456885 6.8152E+11          
+G230  Sunishka Varunesh Malviya      04-MAY-03 F 8875456886 6.8152E+11          
+G476  Vanshita Jayesh Chandarana     04-MAY-03 F 8875456887 6.8152E+11          
+G190  Ram Kumar                      04-MAY-03 M 8875456888 6.8152E+11          
+
+6 rows selected.
+
+SQL> SELECT * FROM BOOKING1;
+
+HOTE GUEST    ROOM_NO DATE_FROM DATE_TO                                         
+---- ----- ---------- --------- ---------                                       
+H111 G256          69 08-SEP-22 10-SEP-22                                       
+H111 G367         412 08-SEP-22 10-SEP-22                                       
+H235 G879        1267 08-SEP-22 10-SEP-22                                       
+H235 G230        1289 08-SEP-22 10-SEP-22                                       
+H432 G476         876 08-SEP-22 10-SEP-22                                       
+H498 G190         345 08-SEP-22 10-SEP-22                                       
+
+6 rows selected.
+
+SQL> 
+SQL> TRUNCATE TABLE BOOKING1;
+
+Table truncated.
+
+SQL> SELECT * FROM BOOKING1;
+
+no rows selected
+
+SQL> 
+SQL> DELETE FROM GUEST1 WHERE NAME LIKE 'V%';
+
+1 row deleted.
+
+SQL> SELECT * FROM GUEST1;
+
+GUEST NAME                           DOB       G   PHONE_NO   ADHAR_NO          
+----- ------------------------------ --------- - ---------- ----------          
+G256  Siddhi Sandip Gupta            03-MAY-03 F 9875456884                     
+G367  Smruti Ajay Agrawal            03-MAY-03 F 8875456884 6.8152E+11          
+G879  Sham Sunder                    04-MAY-03 F 8875456885 6.8152E+11          
+G230  Sunishka Varunesh Malviya      04-MAY-03 F 8875456886 6.8152E+11          
+G190  Ram Kumar                      04-MAY-03 M 8875456888 6.8152E+11          
+
+SQL> 
+SQL> TRUNCATE TABLE HOTEL1;
+
+Table truncated.
+
+SQL> SELECT * FROM HOTEL1;
+
+no rows selected
+
+SQL> 
+SQL> TRUNCATE TABLE ROOM1;
+
+Table truncated.
+
+SQL> SELECT * FROM ROOM1;
+
+no rows selected
+
+SQL> 
+SQL> ALTER TABLE HOTEL1 DROP COLUMN CITY;
+
+Table altered.
+
+SQL> ALTER TABLE ROOM1 DROP COLUMN PRICE;
+
+Table altered.
+
+SQL> ALTER TABLE GUEST1 DROP COLUMN ADHAR_NO;
+
+Table altered.
+
+SQL> ALTER TABLE BOOKING1 DROP COLUMN ROOM_NO;
+
+Table altered.
+
+SQL> 
+SQL> ALTER TABLE GUEST1 ADD CITY NUMBER(10);
+
+Table altered.
+
+SQL> ALTER TABLE GUEST1 MODIFY CITY VARCHAR2(20);
+
+Table altered.
+
+SQL> 
+SQL> UPDATE GUEST1 SET CITY='Dehli' where GUEST_NO='G256';
+
+1 row updated.
+
+SQL> UPDATE GUEST1 SET CITY='Mumbai' where GUEST_NO='G367';
+
+1 row updated.
+
+SQL> UPDATE GUEST1 SET CITY='Mumbai' where GUEST_NO='G879';
+
+1 row updated.
+
+SQL> UPDATE GUEST1 SET CITY='Dehli' where GUEST_NO='G230';
+
+1 row updated.
+
+SQL> UPDATE GUEST1 SET CITY='Pune' where GUEST_NO='G190';
+
+1 row updated.
+
+SQL> 
+SQL> 
+SQL> ALTER TABLE HOTEL1
+  2  ADD CONSTRAINT HOTEL1_PK_HN
+  3  PRIMARY KEY (HOTEL_NO);
+ADD CONSTRAINT HOTEL1_PK_HN
+               *
+ERROR at line 2:
+ORA-02264: name already used by an existing constraint 
+
+
+SQL> 
+SQL> ALTER TABLE ROOM1
+  2  ADD CONSTRAINT ROOM1_FK_HOTEL_NO
+  3  FOREIGN KEY (HOTEL_NO) REFERENCES HOTEL1(HOTEL_NO) ON DELETE CASCADE;
+FOREIGN KEY (HOTEL_NO) REFERENCES HOTEL1(HOTEL_NO) ON DELETE CASCADE
+                                         *
+ERROR at line 3:
+ORA-02270: no matching unique or primary key for this column-list 
+
+
+SQL> 
+SQL> ALTER TABLE BOOKING1
+  2  ADD CONSTRAINT BOOKING_FK_HOTEL_NO
+  3  FOREIGN KEY (HOTEL_NO) REFERENCES HOTEL1(HOTEL_NO) ON DELETE SET NULL;
+FOREIGN KEY (HOTEL_NO) REFERENCES HOTEL1(HOTEL_NO) ON DELETE SET NULL
+                                         *
+ERROR at line 3:
+ORA-02270: no matching unique or primary key for this column-list 
+
+
+SQL> 
+SQL> select constraint_name, constraint_type, table_name, status from user_constraints
+  2  where table_name='HOTEL1';
+
+CONSTRAINT_NAME                C TABLE_NAME                     STATUS          
+------------------------------ - ------------------------------ --------        
+SYS_C0011384                   C HOTEL1                         ENABLED         
+SYS_C0011385                   C HOTEL1                         ENABLED         
+
+SQL> select constraint_name, constraint_type, table_name, status from user_constraints
+  2  where table_name='ROOM1';
+
+no rows selected
+
+SQL> select constraint_name, constraint_type, table_name, status from user_constraints
+  2  where table_name='GUEST1';
+
+CONSTRAINT_NAME                C TABLE_NAME                     STATUS          
+------------------------------ - ------------------------------ --------        
+SYS_C0011388                   C GUEST1                         ENABLED         
+SYS_C0011389                   C GUEST1                         ENABLED         
+
+SQL> select constraint_name, constraint_type, table_name, status from user_constraints
+  2  where table_name='BOOKING1';
+
+CONSTRAINT_NAME                C TABLE_NAME                     STATUS          
+------------------------------ - ------------------------------ --------        
+SYS_C0011390                   C BOOKING1                       ENABLED         
+SYS_C0011391                   C BOOKING1                       ENABLED         
+
+SQL> 
+SQL> ALTER TABLE HOTEL1 RENAME TO HOTEL2;
+ALTER TABLE HOTEL1 RENAME TO HOTEL2
+                             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> ALTER TABLE BOOKING1 RENAME TO BOOKING2;
+ALTER TABLE BOOKING1 RENAME TO BOOKING2
+                               *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> ALTER TABLE ROOM1 RENAME TO ROOM2;
+ALTER TABLE ROOM1 RENAME TO ROOM2
+                            *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> ALTER TABLE GUEST1 RENAME TO GUEST2;
+ALTER TABLE GUEST1 RENAME TO GUEST2
+                             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> 
+SQL> ALTER TABLE GUEST2 RENAME COLUMN CITY TO GUEST_CITY;
+ALTER TABLE GUEST2 RENAME COLUMN CITY TO GUEST_CITY
+*
+ERROR at line 1:
+ORA-00957: duplicate column name 
+
+
+SQL> UPDATE GUEST2 SET GUEST_CITY='Pune' where GUEST_NO='G256';
+
+1 row updated.
+
+SQL> 
+SQL> SELECT GUEST_NO,NAME FROM GUEST WHERE GENDER = 'F';
+
+GUEST NAME                                                                      
+----- ------------------------------                                            
+G256  Siddhi Sandip Gupta                                                       
+G367  Smruti Ajay Agrawal                                                       
+G879  Sham Sunder                                                               
+G230  Sunishka Varunesh Malviya                                                 
+G476  Vanshita Jayesh Chandarana                                                
+
+SQL> UPDATE GUEST SET ADHAR_NO=NULL where GUEST_NO='G256';
+
+1 row updated.
+
+SQL> SELECT GUEST_NO,NAME FROM GUEST WHERE ADHAR_NO IS NULL;
+
+GUEST NAME                                                                      
+----- ------------------------------                                            
+G256  Siddhi Sandip Gupta                                                       
+
+SQL> SELECT * FROM ROOM WHERE PRICE>1500;
+
+   ROOM_NO HOTE T      PRICE                                                    
+---------- ---- - ----------                                                    
+      1267 H235 N    1750.55                                                    
+      1289 H235 N    1950.55                                                    
+       345 H498 N       1600                                                    
+       467 H498 N       1800                                                    
+      1201 H193 N       1750                                                    
+       223 H437 N       1550                                                    
+
+6 rows selected.
+
+SQL> 
+SQL> CREATE TABLE GUEST_AGE AS
+  2  SELECT TRUNC((SYSDATE - TO_DATE(DOB, 'YYYY-MM-DD'))/ 365.25-2000) AS AGE_TODAY,
+  3  Guest_No, Name, DOB, Gender, Phone_No FROM GUEST;
+
+Table created.
+
+SQL> 
+SQL> SELECT * FROM HOTEL;
+
+HOTEL_NO             NAME                 CITY                                  
+-------------------- -------------------- ---------------                       
+H111                 Empire Hotel         Delhi                                 
+H235                 Park Place           Delhi                                 
+H432                 Brawnstone Hotel     Mumbai                                
+H498                 James Plaza          Mumbai                                
+H193                 Devon Hotel          Pune                                  
+H437                 Clarimont Hotel      Pune                                  
+
+6 rows selected.
+
+SQL> SELECT * FROM HOTEL WHERE CITY = 'Mumbai';
+
+HOTEL_NO             NAME                 CITY                                  
+-------------------- -------------------- ---------------                       
+H432                 Brawnstone Hotel     Mumbai                                
+H498                 James Plaza          Mumbai                                
+
+SQL> SELECT * FROM ((SELECT HOTEL_NO,NAME FROM HOTEL) NATURAL JOIN ROOM);
+
+HOTE NAME                    ROOM_NO T      PRICE                               
+---- -------------------- ---------- - ----------                               
+H111 Empire Hotel                313 A    1450.55                               
+H111 Empire Hotel                412 N    1450.55                               
+H235 Park Place                 1267 N    1750.55                               
+H235 Park Place                 1289 N    1950.55                               
+H432 Brawnstone Hotel            876 A    1240.55                               
+H432 Brawnstone Hotel            898 A    1240.55                               
+H498 James Plaza                 345 N       1600                               
+H498 James Plaza                 467 N       1800                               
+H193 Devon Hotel                1001 A       1500                               
+H193 Devon Hotel                1201 N       1750                               
+H437 Clarimont Hotel             257 N       1400                               
+
+HOTE NAME                    ROOM_NO T      PRICE                               
+---- -------------------- ---------- - ----------                               
+H437 Clarimont Hotel             223 N       1550                               
+
+12 rows selected.
+
+SQL> 
+SQL> CREATE TABLE HNR AS
+  2  SELECT * FROM (
+  3  (SELECT HOTEL_NO,CITY FROM HOTEL)
+  4  NATURAL JOIN
+  5  (SELECT HOTEL_NO,ROOM_NO FROM ROOM));
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE GNB AS
+  2  SELECT * FROM (
+  3  (SELECT HOTEL_NO,GUEST_NO FROM BOOKING)
+  4  NATURAL JOIN
+  5  (SELECT GUEST_NO,NAME FROM GUEST));
+
+Table created.
+
+SQL> 
+SQL> SELECT DISTINCT(NAME), CITY FROM (SELECT * FROM GNB NATURAL JOIN HNR);
+
+NAME                           CITY                                             
+------------------------------ ---------------                                  
+Smruti Ajay Agrawal            Delhi                                            
+Sham Sunder                    Delhi                                            
+Ram Kumar                      Mumbai                                           
+Sunishka Varunesh Malviya      Delhi                                            
+Siddhi Sandip Gupta            Delhi                                            
+Vanshita Jayesh Chandarana     Mumbai                                           
+
+6 rows selected.
+
+SQL> SELECT * FROM ROOM WHERE TYPE ='A' ORDER BY PRICE;
+
+   ROOM_NO HOTE T      PRICE                                                    
+---------- ---- - ----------                                                    
+       876 H432 A    1240.55                                                    
+       898 H432 A    1240.55                                                    
+       313 H111 A    1450.55                                                    
+      1001 H193 A       1500                                                    
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;
