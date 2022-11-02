@@ -1,0 +1,59 @@
+DBMS prac 6
+AIM:- Introduction to PL/SQL and execution of PL/SQL Blocks, stored Procedure using Oracle 11g 
+
+
+Write PL/SQL block to find width from area and height.
+
+SET SERVEROUTPUT ON;
+DECLARE
+	V_WIDTH INTEGER;
+	V_HEIGHT INTEGER :=10;
+	V_AREA INTEGER :=20;
+BEGIN
+	V_WIDTH:= V_AREA/V_HEIGHT;
+	DBMS_OUTPUT.PUT_LINE('WIDTH ='|| V_WIDTH);
+EXCEPTION 
+	WHEN ZERO_DIVIDE THEN
+	DBMS_OUTPUT.PUT_LINE('DIVISION BY ZERO');
+END;
+/
+
+Write PL/SQL block to find maximum number from given number.
+
+DECLARE
+  A INT ;
+  B INT ;
+  C INT ;
+
+BEGIN
+  A:=&a;
+  B:=&b;
+  C:=&c;
+  IF(A>B AND A>C) THEN
+    DBMS_OUTPUT.PUT_LINE('A IS MAX');
+  ELSIF(B>A AND B>C) THEN
+    DBMS_OUTPUT.PUT_LINE('B IS MAX');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('C IS MAX');
+  END IF;
+END;
+/
+
+Write PL/SQl program for swaping two number.
+
+DECLARE
+  A INT ;
+  B INT ;
+  TEMP INT;
+
+BEGIN 
+  A:=&A;
+  B:=&B;
+
+  TEMP := A;
+  A := B;
+  B := TEMP;
+
+  DBMS_OUTPUT.PUT_LINE('A = '|| A ||' B = '||B);
+END;
+/
