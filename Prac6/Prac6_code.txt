@@ -2,8 +2,7 @@ DBMS prac 6
 AIM:- Introduction to PL/SQL and execution of PL/SQL Blocks, stored Procedure using Oracle 11g 
 
 
-Write PL/SQL block to find width from area and height.
-
+1. Write PL/SQL block to find width from area and height.
 SET SERVEROUTPUT ON;
 DECLARE
 	V_WIDTH INTEGER;
@@ -18,7 +17,7 @@ EXCEPTION
 END;
 /
 
-Write PL/SQL block to find maximum number from given number.
+2.Write PL/SQL block to find maximum number from given number.
 
 DECLARE
   A INT ;
@@ -39,7 +38,7 @@ BEGIN
 END;
 /
 
-Write PL/SQl program for swaping two number.
+3. Write PL/SQl program for swaping two number.
 
 DECLARE
   A INT ;
@@ -55,5 +54,195 @@ BEGIN
   B := TEMP;
 
   DBMS_OUTPUT.PUT_LINE('A = '|| A ||' B = '||B);
+END;
+/
+
+
+
+4.  Write a PL/SQL program to find the total and average of 4 subjects and display the grade
+
+declare
+a number:=&a;
+b number:=&b;
+c number:=&c;
+d number:=&d;
+sm number;
+av number;
+GRADE CHAR;
+begin
+sm:=a+b+c+d;
+av:=sm/4;
+  IF av >= 75 THEN 
+    GRADE := 'A';
+  ELSIF av > 50 THEN
+    GRADE := 'B';
+  ELSIF av > 35 THEN
+    GRADE := 'C';
+  ELSE
+    GRADE := 'F';
+  END IF;
+  
+  DBMS_OUTPUT.PUT_LINE('TOTAL = '||sm);
+  DBMS_OUTPUT.PUT_LINE('AVG = '||av);
+  DBMS_OUTPUT.PUT_LINE('GRADE = '||GRADE);
+END;
+/
+
+
+5.Write a program to accept a number and find the sum of the digits
+
+declare
+  a number:=&a;
+  sm number:=0;
+BEGIN
+  while a<>0 loop
+     sm := sm + mod(a,10);
+     a := trunc(a/10);
+  end loop;
+  DBMS_OUTPUT.PUT_LINE('TOTAL = '||sm);
+end;
+/
+
+6. PL/SQL Program to accept a number from user and print number in reverse order.
+
+DECLARE
+    NUM NUMBER;
+    TEMP NUMBER;
+    REM NUMBER;
+    RES NUMBER:=0;
+BEGIN
+    NUM:=&NUM;
+    TEMP:= NUM;
+    WHILE TEMP >0 LOOP
+        REM := MOD(TEMP,10);
+	RES := (RES*10) + REM;
+	TEMP := TRUNC(TEMP/10);
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('REVERSE = '||RES); 
+END;
+/
+
+7.Write a PL / SQL program to check whether the given number is prime or not.
+
+declare
+n number:=&n;            
+i number;           
+temp number;       
+begin                
+i := 2;
+temp := 1;
+  for i in 2..n/2
+    loop
+        if mod(n, i) = 0
+        then
+            temp := 0;
+            exit;
+        end if;
+    end loop;
+    if temp = 1
+    then
+        dbms_output.put_line('true');
+    else
+        dbms_output.put_line('false');
+    end if;
+end;
+/
+         
+8.Write a PL/SQL program to find the factorial of a given number.
+
+declare
+  a number:=&a;
+  sm number:=1;
+BEGIN
+  for i in 1..a loop
+     sm := sm * i;
+  end loop;
+  DBMS_OUTPUT.PUT_LINE('factorial = '||sm);
+end;
+/
+
+9.CALCULATE AREA OF CIRCLE FOR A VALUE OF RADIUS. STORE A RADIUS AND CORRESPONDING 
+VALUES OF CALCULATED AREA IN TABLE AREA CONSISTING OF TWO COLUMN RADIUS DATTYPE NO 
+AND AR(AREA)
+
+CREATE TABLE AREA(
+RADIUS NUMBER(5),
+AR NUMBER(5,2)
+);
+
+DECLARE
+  RADIUS INT ;
+  AREA FLOAT;
+BEGIN
+  FOR I IN 3..7 LOOP
+    RADIUS:=I;
+    AREA := 3.145 * POWER(RADIUS,2);
+    INSERT INTO AREA(RADIUS,AR) VALUES(RADIUS,AREA);
+  END LOOP;
+END;
+/
+
+SELECT * FROM AREA;
+DROP TABLE AREA;
+
+
+
+10.WRITE PL/SQL PROGRAM FOR DISPLAY OF FIBBONACCI SERIES.
+
+DECLARE
+  VAL INT ;
+  TEMP INT := 0;
+  RES INT := 1;
+  PREV INT;
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('RES = '||TEMP);
+  DBMS_OUTPUT.PUT_LINE('RES = '||RES);
+  VAL := &VAL;
+
+  FOR I IN 2..VAL LOOP
+    PREV := RES + TEMP;
+    TEMP := RES;
+    RES := PREV;
+    DBMS_OUTPUT.PUT_LINE('RES = '||RES);
+  END LOOP;
+END;
+/
+
+11.WRITE PL/SQL PROGRAM FOR CHECKING NUMBER IS PALINDROM OR NOT.
+
+DECLARE
+    NUM NUMBER;
+    TEMP NUMBER;
+    REM NUMBER;
+    RES NUMBER:=0;
+BEGIN
+    NUM:=&NUM;
+    TEMP:= NUM;
+    WHILE TEMP >0 LOOP
+        REM := MOD(TEMP,10);
+	RES := (RES*10) + REM;
+	TEMP := TRUNC(TEMP/10);
+    END LOOP;
+
+    IF NUM = RES THEN
+       dbms_output.put_line('true');
+    else
+        dbms_output.put_line('false');
+    end if;
+END;
+/
+
+12.WRITE PL/SQL PROGRAM FOR PRINTING BASIC * PATTERN.
+
+DECLARE
+    NUM NUMBER;
+BEGIN
+    NUM:=&NUM;
+    FOR I IN 0..(NUM-1) LOOP
+	FOR J IN 0..(I) LOOP
+            DBMS_OUTPUT.PUT('*') ;
+    END LOOP;
+    DBMS_OUTPUT.NEW_LINE;
+  END LOOP;
 END;
 /
