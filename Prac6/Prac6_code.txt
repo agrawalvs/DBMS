@@ -2,7 +2,8 @@ DBMS prac 6
 AIM:- Introduction to PL/SQL and execution of PL/SQL Blocks, stored Procedure using Oracle 11g 
 
 
-1. Write PL/SQL block to find width from area and height.
+Write PL/SQL block to find width from area and height.
+
 SET SERVEROUTPUT ON;
 DECLARE
 	V_WIDTH INTEGER;
@@ -17,7 +18,7 @@ EXCEPTION
 END;
 /
 
-2.Write PL/SQL block to find maximum number from given number.
+Write PL/SQL block to find maximum number from given number.
 
 DECLARE
   A INT ;
@@ -38,7 +39,7 @@ BEGIN
 END;
 /
 
-3. Write PL/SQl program for swaping two number.
+Write PL/SQl program for swaping two number.
 
 DECLARE
   A INT ;
@@ -58,110 +59,7 @@ END;
 /
 
 
-
-4.  Write a PL/SQL program to find the total and average of 4 subjects and display the grade
-
-declare
-a number:=&a;
-b number:=&b;
-c number:=&c;
-d number:=&d;
-sm number;
-av number;
-GRADE CHAR;
-begin
-sm:=a+b+c+d;
-av:=sm/4;
-  IF av >= 75 THEN 
-    GRADE := 'A';
-  ELSIF av > 50 THEN
-    GRADE := 'B';
-  ELSIF av > 35 THEN
-    GRADE := 'C';
-  ELSE
-    GRADE := 'F';
-  END IF;
-  
-  DBMS_OUTPUT.PUT_LINE('TOTAL = '||sm);
-  DBMS_OUTPUT.PUT_LINE('AVG = '||av);
-  DBMS_OUTPUT.PUT_LINE('GRADE = '||GRADE);
-END;
-/
-
-
-5.Write a program to accept a number and find the sum of the digits
-
-declare
-  a number:=&a;
-  sm number:=0;
-BEGIN
-  while a<>0 loop
-     sm := sm + mod(a,10);
-     a := trunc(a/10);
-  end loop;
-  DBMS_OUTPUT.PUT_LINE('TOTAL = '||sm);
-end;
-/
-
-6. PL/SQL Program to accept a number from user and print number in reverse order.
-
-DECLARE
-    NUM NUMBER;
-    TEMP NUMBER;
-    REM NUMBER;
-    RES NUMBER:=0;
-BEGIN
-    NUM:=&NUM;
-    TEMP:= NUM;
-    WHILE TEMP >0 LOOP
-        REM := MOD(TEMP,10);
-	RES := (RES*10) + REM;
-	TEMP := TRUNC(TEMP/10);
-    END LOOP;
-    DBMS_OUTPUT.PUT_LINE('REVERSE = '||RES); 
-END;
-/
-
-7.Write a PL / SQL program to check whether the given number is prime or not.
-
-declare
-n number:=&n;            
-i number;           
-temp number;       
-begin                
-i := 2;
-temp := 1;
-  for i in 2..n/2
-    loop
-        if mod(n, i) = 0
-        then
-            temp := 0;
-            exit;
-        end if;
-    end loop;
-    if temp = 1
-    then
-        dbms_output.put_line('true');
-    else
-        dbms_output.put_line('false');
-    end if;
-end;
-/
-         
-8.Write a PL/SQL program to find the factorial of a given number.
-
-declare
-  a number:=&a;
-  sm number:=1;
-BEGIN
-  for i in 1..a loop
-     sm := sm * i;
-  end loop;
-  DBMS_OUTPUT.PUT_LINE('factorial = '||sm);
-end;
-/
-
-9.CALCULATE AREA OF CIRCLE FOR A VALUE OF RADIUS. STORE A RADIUS AND CORRESPONDING 
+CALCULATE AREA OF CIRCLE FOR A VALUE OF RADIUS. STORE A RADIUS AND CORRESPONDING 
 VALUES OF CALCULATED AREA IN TABLE AREA CONSISTING OF TWO COLUMN RADIUS DATTYPE NO 
 AND AR(AREA)
 
@@ -187,7 +85,7 @@ DROP TABLE AREA;
 
 
 
-10.WRITE PL/SQL PROGRAM FOR DISPLAY OF FIBBONACCI SERIES.
+WRITE PL/SQL PROGRAM FOR DISPLAY OF FIBBONACCI SERIES.
 
 DECLARE
   VAL INT ;
@@ -208,7 +106,7 @@ BEGIN
 END;
 /
 
-11.WRITE PL/SQL PROGRAM FOR CHECKING NUMBER IS PALINDROM OR NOT.
+WRITE PL/SQL PROGRAM FOR CHECKING NUMBER IS PALINDROM OR NOT.
 
 DECLARE
     NUM NUMBER;
@@ -232,7 +130,7 @@ BEGIN
 END;
 /
 
-12.WRITE PL/SQL PROGRAM FOR PRINTING BASIC * PATTERN.
+WRITE PL/SQL PROGRAM FOR PRINTING BASIC * PATTERN.
 
 DECLARE
     NUM NUMBER;

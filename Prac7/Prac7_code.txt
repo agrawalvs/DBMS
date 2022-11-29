@@ -1,0 +1,179 @@
+Prac 7
+AIM: EXECUTION OPF STORED FUNCTION USING PL/SQL ON DATABASE TABLE FOR UNDERLINE DATABASE
+
+CONNECT SYSTEM/system;
+GRANT dba to ved;
+commit;
+CONNECT VED/ved;
+DESC SCOTT.EMP;
+CREATE TABLE EMPP AS (SELECT * FROM SCOTT.EMP);
+
+
+//--------------------------------------------------------------------------------------
+1. CALCULATE AREA OF CIRCLE FOR A VALUE OF RADIUS. STORE A RADIUS AND CORRESPONDING VALUES OF CALCULATED AREA IN TABLE AREA CONSISTING OF TWO COLUMN RADIUS DATTYPE NO AND AR(AREA)
+//--------------------------------------------------------------------------------------
+
+Create or replace 
+procedure 
+rent_calci(VEHICLES_ID IN number, rent_amt OUT number) IS
+rentduration number;
+begin
+select(RETURN_date-RENT_date)into rentduration from VEHICLE_RATE where vehicle_id = VEHICLES_ID ;
+rent_amt :=rentduration * 50;
+end;
+/
+
+DECLARE
+RENT NUMBER;
+BEGIN
+rent_calci(1234,RENT);
+dbms_output.put_line(RENT);
+END;
+/
+//--------------------------------------------------------------------------------------
+2. Write a function using PL/SQL to find out the factorial of a number
+//--------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION fact(num IN NUMBER)
+RETURN NUMBER IS fac NUMBER :=1;
+n NUMBER := num;
+BEGIN
+WHILE n>0 LOOP
+fac:=n*fac;        
+n:=n-1;                      
+END loop;
+RETURN(fac);
+END;
+/
+
+SELECT FACT(5) FROM DUAL;
+ 
+//--------------------------------------------------------------------------------------
+3. Write a function using PL/SQL to find out the square of a number
+//--------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION SQUARE(num IN NUMBER)
+RETURN NUMBER IS RES NUMBER :=1;
+BEGIN 
+RES := NUM*NUM;
+RETURN(RES);
+END;
+/
+
+SELECT SQUARE(5) FROM DUAL;
+
+--------------------------------------------------------------------------------------
+4. Write a function using PL/SQL to find out the square root of a number
+--------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION SQUAREROOT(num IN NUMBER)
+RETURN NUMBER IS RES NUMBER :=1;
+i NUMBER := 1;
+BEGIN
+if (NUM = 0 or NUM = 1) THEN
+return NUM;
+END IF;
+WHILE I<=NUM LOOP
+RES := RES+1;        
+i := RES*RES;
+END LOOP;
+RES := RES-1;
+RETURN(RES);
+END;
+/
+
+SELECT SQUAREROOT(25) FROM DUAL;
+
+--------------------------------------------------------------------------------------
+5. Write PL/SQL Function for area of circle.
+--------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION AREA_CIRCLE(num IN NUMBER)
+RETURN NUMBER IS RES NUMBER :=1;
+
+BEGIN
+RES := 3.145*NUM*NUM;
+RETURN(RES);
+END;
+/
+
+SELECT AREA_CIRCLE(10) FROM DUAL;
+
+--------------------------------------------------------------------------------------
+6. Write a function to print fibonacci series.
+--------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION fib(num IN NUMBER)
+RETURN NUMBER IS RES NUMBER :=1;
+  TEMP INT := 0;
+  PREV INT;
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('RES = '||TEMP||' ');
+  DBMS_OUTPUT.PUT_LINE(RES||' ');
+
+  FOR I IN 2..num LOOP
+    PREV := RES + TEMP;
+    TEMP := RES;
+    RES := PREV;
+    DBMS_OUTPUT.PUT_LINE(RES||' ');
+  END LOOP;
+return res;
+END;
+/
+
+declare
+VAL INT;
+BEGIN
+VAL :=FIB(10);
+END;
+/
+----------------------------------------------------------------------------------------
+7. Write PL/SQL function to calculate avg salary.
+----------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION AVG_SAL(DEPTNO1 IN NUMBER) 
+RETURN NUMBER IS A_SAL EMPP.SAL%TYPE;
+BEGIN
+SELECT AVG(SAL) INTO A_SAL FROM EMPP WHERE DEPTNO = DEPTNO1;
+RETURN(A_SAL);
+END;
+/
+SELECT AVG_SAL(20) FROM DUAL;
+---------------------------------------------------------------------------------------- 
+8. Write a function using PL/SQL to find out whether number is Armstrong or not
+---------------------------------------------------------------------------------------- 
+CREATE OR REPLACE FUNCTION ARMSTRONG(num IN NUMBER)
+RETURN NUMBER IS RES NUMBER :=1;
+    n number:=NUM;
+    s number:=0;
+    r number;
+    len number;
+    m number;
+  
+begin
+    m := NUM;
+    len := length(to_char(n));
+    while n>0
+    loop
+        r := mod(n , 10);
+        s := s + power(r , len);
+        n := trunc(n / 10);
+    end loop;
+    if m = s
+    then
+        RETURN 1;
+    else
+        RETURN 0;
+    end if;     
+end;
+/
+
+DECLARE 
+VAL INT;
+BEGIN
+VAL:=ARMSTRONG(153);
+IF(VAL = 1) THEN
+dbms_output.put_line('yes');
+else
+dbms_output.put_line('no');
+END IF;
+END;
+/
